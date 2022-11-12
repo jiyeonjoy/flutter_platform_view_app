@@ -8,6 +8,14 @@ import Flutter
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
     GeneratedPluginRegistrant.register(with: self)
+      
+    weak var nativeRegistrar = self.registrar(forPlugin: "NativeViewPlugin")
+
+    let nativeFactory = NativeViewFactory(messenger: nativeRegistrar!.messenger())
+    self.registrar(forPlugin: "<NativeViewPlugin>")!.register(
+        nativeFactory,
+        withId: "plugin/native_widget")
+      
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 }
